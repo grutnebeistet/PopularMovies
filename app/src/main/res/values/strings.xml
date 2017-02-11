@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">PopularMovies</string>
+
+    <string name="main_title">Movie Shizzle</string>
+    <string name="movie_details_title">Movie details</string>
+
+    <!-- Settings menu-->
+    <string name="settings_menu_item">Settings</string>
+    <!-- Settings title-->
+    <string name="settings_title">Settings</string>
+
+    <!-- Order-By preference-->
+    <string name="settings_order_by_label">Order By</string>
+    <string name="settings_order_by_key" translatable="false">order_by</string>
+    <string name="settings_order_by_default" translatable="false">@string/settings_order_by_popularity_value</string>
+
+    <!-- Order-by most popular option -->
+    <string name="settings_order_by_popularity_label">Popularity</string>
+    <string name="settings_order_by_popularity_value" translatable="false">popular</string>
+
+    <!-- Order-by top rated option -->
+    <string name="settings_order_by_rating_label">Rating</string>
+    <string name="settings_order_by_rating_value" translatable="false">top_rated</string>
+
+    <!-- Text to display when no movies are fetched-->
+    <string name="empty_view_text">No movies to display</string>
+    <string name="empty_view_no_connection">No internet connection</string>
+</resources>

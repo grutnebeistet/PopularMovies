@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sv_movie_details"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        // Header w/Image
+
+        <LinearLayout
+            android:id="@+id/ll_detail_header"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/view_head"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </ImageView>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+            <TextView
+                android:id="@+id/tv_movieDetails_title"
+                style="@style/movieDetailTextViewStyle"
+                android:fontFamily="sans-serif-light"
+                android:textSize="34sp" />
+
+            <TextView
+                android:id="@+id/tv_movieDetails_title_EN"
+                style="@style/movieDetailTextViewStyle"
+                android:fontFamily="sans-serif-light"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_movieDetails_releaseDate"
+                style="@style/movieDetailTextViewStyle"
+                android:paddingTop="8dp"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/tv_movieDetails_runtime"
+                style="@style/movieDetailTextViewStyle"
+                android:textColor="@color/detailsTextColor"
+                android:paddingBottom="8dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/tv_movieDetails_overview"
+                style="@style/movieDetailTextViewStyle"
+                android:textColor="@color/detailsTextColor" />
+
+            <RatingBar
+                android:id="@+id/rb_movieDetails_rating"
+                style="?android:attr/ratingBarStyleSmall"
+                android:paddingTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </RatingBar>
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>
