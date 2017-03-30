@@ -1,78 +1,147 @@
 package com.roberts.adrian.popularmovies;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
+import static com.roberts.adrian.popularmovies.R.drawable.ic_place_holder;
 
 /**
  * Created by Adrian on 07/02/2017.
- *
  */
 
-public class MovieAdapter extends ArrayAdapter<Movie> {
-    private static final String BASE_POSTER_PATH_URL = "http://image.tmdb.org/t/p/";
-    private static final String DEFAULT_POSTER_SIZE = "w185";
-    private static final String DEFAULT_BACKPOSTER_SIZE = "w500";
+public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapterViewHolder> implements View.OnLongClickListener, View.OnTouchListener {
+    private final static String LOG_TAG = MovieAdapter.class.getSimpleName();
+
     private Context mContext;
-    public MovieAdapter(Context context, List<Movie> movies){
-        super(context,0,movies);
-        mContext = context;
+    private boolean isLongPressed = false;
+
+    final private MovieAdapterOnClickHandler mClickHandler;
+
+    /**
+     * The interface that receives onClick messages.
+     */
+    public interface MovieAdapterOnClickHandler {
+        void onClick(int movieId);
     }
 
-    @NonNull
+    private Cursor mCursor;
+
+    public MovieAdapter(Context context, MovieAdapterOnClickHandler clickHandler) {
+        Log.i(LOG_TAG, "MovieAdapter");
+        mClickHandler = clickHandler;
+        mContext = context;
+
+
+    }
+
     @Override
-    public View getView(int position, final View convertView, ViewGroup parent) {
-        View gridViewItem = convertView;
-        if(gridViewItem == null){
-            gridViewItem = LayoutInflater.from(getContext()).inflate(R.layout.grid_item, parent, false);
+    public boolean onLongClick(View view) {
+        view.animate().alpha(0.4f);
+        isLongPressed = true;
+
+        return true;
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        view.onTouchEvent(motionEvent);
+        if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+            if (isLongPressed) {
+                view.setAlpha(1f);
+                isLongPressed = false;
+
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public MovieAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        View view = LayoutInflater.from(mContext).inflate(R.layout.grid_item, parent, false);
+        view.setFocusable(true);
+        return new MovieAdapterViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(MovieAdapterViewHolder holder, int position) {
+        if (mCursor.isClosed()) return;
+
+        mCursor.moveToPosition(position);
+
+        long id = mCursor.getInt(MainActivity.INDEX_MOVIE_ID);
+
+        boolean hasStoredThumbnail = mCursor.getBlob(MainActivity.INDEX_STORED_THUMBNAIL) != null;
+
+        // Loading image thumbnail from DB
+        if (hasStoredThumbnail) {
+            byte[] thumbnailBarray = mCursor.getBlob(MainActivity.INDEX_STORED_THUMBNAIL);
+            Bitmap thumbnail = BitmapFactory.decodeByteArray(thumbnailBarray, 0, thumbnailBarray.length);
+            holder.movieThumbnailImageView.setImageBitmap(thumbnail);
+        }
+        // Using picasso to load and insert thumbnail with url stored in the database
+        else {
+            Log.i(LOG_TAG, "no has blob, picassoing");
+            String thumbnailUrl = mCursor.getString(MainActivity.INDEX_MOVIE_THUMBNAIL);
+            Picasso.with(mContext)
+                    .load(thumbnailUrl).fit()
+                    .placeholder(ic_place_holder)
+                    .error(ic_place_holder)
+                    .into(holder.movieThumbnailImageView);
+        }
+        final int padding = mContext.getResources().getDimensionPixelSize(R.dimen.padding_small);
+        holder.itemView.setPadding(padding, padding, padding, padding);
+
+        holder.itemView.setTag(id);
+
+        if (mCursor.getInt(MainActivity.INDEX_IS_FAVOURITE) == 1) {
+            holder.itemView.setOnTouchListener(this);
+            holder.itemView.setOnLongClickListener(this);
         }
 
-        final Movie currentMovie = getItem(position);
+    }
 
-        final ImageView moviePosterImageView = (ImageView)gridViewItem.findViewById(R.id.grid_item_image_view);
 
-        //StringBuilder posterUrl = new StringBuilder();
-       // posterUrl.append(BASE_POSTER_PATH_URL).append(DEFAULT_POSTER_SIZE).append(currentMovie.getMovieThumbnail());
-        String posterUrl = BASE_POSTER_PATH_URL.concat(DEFAULT_POSTER_SIZE).concat(currentMovie.getMovieThumbnail());
-        Picasso.with(mContext)
-                .load(posterUrl).fit()
-                .into(moviePosterImageView);
-        gridViewItem.setPadding(8,8,8,8);
-        gridViewItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String title = currentMovie.getMovieTitle();
-                String orgTitle = currentMovie.getMovieTitleOriginal();
-                String overview = currentMovie.getMovieOverview();
-                String releaseDate = currentMovie.getReleaseDate();
-                double rating = currentMovie.getUserRating();
-                int runtime = currentMovie.getRuntime();
-                String backPosterUrl = BASE_POSTER_PATH_URL.concat(DEFAULT_BACKPOSTER_SIZE).concat(currentMovie.getBackPoster());
+    class MovieAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-                Intent openMovieDetails = new Intent(mContext, MovieDetailsActivity.class);
-                Bundle movieDetails = new Bundle();
-                movieDetails.putString("title", title);
-                movieDetails.putString("orgTitle", orgTitle);
-                movieDetails.putString("releaseDate", releaseDate);
-                movieDetails.putString("overview", overview);
-                movieDetails.putString("backposter", backPosterUrl.toString());
-                movieDetails.putDouble("rating", rating);
-                movieDetails.putInt("runtime", runtime);
+        ImageView movieThumbnailImageView;
 
-                openMovieDetails.putExtras(movieDetails);
-                mContext.startActivity(openMovieDetails);
-            }
-        });
-        return gridViewItem;
+        MovieAdapterViewHolder(View view) {
+            super(view);
+
+            movieThumbnailImageView = (ImageView) view.findViewById(R.id.grid_item_image_view);
+            view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (mCursor.isClosed()) return;
+            mCursor.moveToPosition(getAdapterPosition());
+            mClickHandler.onClick(mCursor.getInt(MainActivity.INDEX_MOVIE_ID));
+        }
+
+    }
+
+    @Override
+    public int getItemCount() {
+        if (null == mCursor) return 0;
+        return mCursor.getCount();
+    }
+
+    public void swapCursor(Cursor newCursor) {
+        Log.i(LOG_TAG, "swapCursor");
+        mCursor = newCursor;
+        notifyDataSetChanged();
     }
 }

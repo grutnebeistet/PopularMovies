@@ -1,78 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/sv_movie_details"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    android:orientation="vertical">
 
-    <LinearLayout
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ScrollView
+        android:id="@+id/sv_movie_details"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
         android:orientation="vertical">
-
-        // Header w/Image
-
-        <LinearLayout
-            android:id="@+id/ll_detail_header"
-            android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/view_head"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </ImageView>
-        </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
-            <TextView
-                android:id="@+id/tv_movieDetails_title"
-                style="@style/movieDetailTextViewStyle"
-                android:fontFamily="sans-serif-light"
-                android:textSize="34sp" />
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_movieDetails_title_EN"
-                style="@style/movieDetailTextViewStyle"
-                android:fontFamily="sans-serif-light"
-                android:textSize="18sp" />
+            <include
+                android:id="@+id/details_primary"
+                layout="@layout/details_primary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-            <TextView
-                android:id="@+id/tv_movieDetails_releaseDate"
-                style="@style/movieDetailTextViewStyle"
-                android:paddingTop="8dp"
-                android:textSize="24sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/activity_vertical_margin">
 
-            <TextView
-                android:id="@+id/tv_movieDetails_runtime"
-                style="@style/movieDetailTextViewStyle"
-                android:textColor="@color/detailsTextColor"
-                android:paddingBottom="8dp"
-                android:textStyle="italic" />
 
-            <TextView
-                android:id="@+id/tv_movieDetails_overview"
-                style="@style/movieDetailTextViewStyle"
-                android:textColor="@color/detailsTextColor" />
+                <TextView
+                    android:id="@+id/tv_TrailerLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    android:textColor="@color/textColor"
+                    tools:text="Trailers" />
 
-            <RatingBar
-                android:id="@+id/rb_movieDetails_rating"
-                style="?android:attr/ratingBarStyleSmall"
-                android:paddingTop="8dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerview_trailers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="@dimen/activity_vertical_margin"
+                    android:paddingStart="@dimen/activity_vertical_margin" />
 
-            </RatingBar>
+                <TextView
+                    android:id="@+id/tv_ReviewLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:paddingBottom="@dimen/padding_standard"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    android:textColor="@color/textColor" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerview_reviews"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:paddingBottom="@dimen/padding_standard"
+                    android:paddingLeft="@dimen/activity_vertical_margin"
+                    android:paddingStart="@dimen/activity_vertical_margin"/>
+
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-
-</ScrollView>
+    </ScrollView>
+</layout>

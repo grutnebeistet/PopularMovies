@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.roberts.adrian.popularmovies">
+    package="com.roberts.adrian.popularmovies"
+    xmlns:tools="http://schemas.android.com/tools">
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-sdk tools:overrideLibrary="yalantis.com.sidemenu"/>
 
     <application
         android:allowBackup="true"
@@ -10,9 +12,14 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <provider
+            android:name=".data.MovieDataProvider"
+            android:authorities="@string/content_authority"
+            android:exported="false"/>
         <activity
             android:name=".MainActivity"
-            android:label="@string/main_title">
+            android:label="@string/main_title"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,13 +33,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.roberts.adrian.popularmovies.MainActivity"/>
         </activity>
-        <activity
-            android:name=".SettingsActivity"
-            android:label="@string/settings_title"
-            android:parentActivityName=".MainActivity"/>
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value="com.roberts.adrian.popularmovies.MainActivity"/>
     </application>
 
 </manifest>

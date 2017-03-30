@@ -2,7 +2,11 @@
 <resources>
     <color name="colorPrimary">#212121</color>
     <color name="colorPrimaryDark">#000000</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimaryLight">#B2DFDB</color>
+    <color name="colorAccent">#9A0000</color> <!--FF4081-->
 
-<color name="detailsTextColor">#FFF8E1</color>
+    <color name="textColor">#fff</color>
+    <color name="translucent_black">#80000000</color>
+
+    <color name="left_drawer_bg">#111</color>
 </resources>

@@ -1,4 +1,6 @@
 <resources>
+
+
     <string name="app_name">PopularMovies</string>
 
     <string name="main_title">Movie Shizzle</string>
@@ -22,7 +24,44 @@
     <string name="settings_order_by_rating_label">Rating</string>
     <string name="settings_order_by_rating_value" translatable="false">top_rated</string>
 
+    <!-- Order-by users favourites -->
+    <string name="settings_order_by_favourite_label">Favourites</string>
+    <string name="settings_order_by_favourite_value" translatable="false">favourite</string>
+
+
     <!-- Text to display when no movies are fetched-->
     <string name="empty_view_text">No movies to display</string>
     <string name="empty_view_no_connection">No internet connection</string>
+
+    <string name="runtime_minutes">%1$o min</string>
+
+    <string name="trailer_size">%1$op</string>
+
+    <string name="content_authority">com.roberts.adrian.popularmovies</string>
+
+    <string name="trailer_label_zero">No trailers available</string>
+    <string name="trailer_label_one">Trailer</string>
+    <string name="trailer_label_many">Trailers</string>
+
+    <string name="review_label_zero">No reviews available</string>
+    <string name="review_label_one">Review</string>
+    <string name="review_label_many">Reviews</string>
+
+    <plurals name="trailerOrTrailers">
+        <item quantity="zero">No trailers available </item>
+        <item quantity="one">Trailer</item>
+        <item quantity="other">Trailers</item>
+    </plurals>
+
+    <!-- App titles according to movie sort order-->
+    <string name="app_title_popularity">Popular Movies</string>
+    <string name="app_title_rating">Top Rated Movies</string>
+    <string name="app_title_favourites">Favourite Movies</string>
+
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+
+    <string name="review_author_label">Review by %s</string>
+
+    <string name="loading_text">Loading ...</string>
 </resources>

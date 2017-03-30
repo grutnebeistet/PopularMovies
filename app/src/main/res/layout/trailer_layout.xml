@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="horizontal"
+        android:background="@drawable/recycler_item_selector"
+        >
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <ImageView
+            android:id="@+id/trailerIconImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toTopOf="@id/guideline"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="@id/guideline"
+            app:srcCompat="@drawable/ic_utube_trailer" />
+
+        <TextView
+            android:id="@+id/trailerNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:layout_marginStart="32dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/textColor"
+            app:layout_constraintBottom_toTopOf="@id/guideline"
+            app:layout_constraintLeft_toRightOf="@id/trailerIconImageView"
+            app:layout_constraintTop_toTopOf="@id/guideline"
+            tools:text="HD Trailer " />
+
+        <TextView
+            android:id="@+id/trailerSizeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:layout_marginStart="32dp"
+            android:textColor="@color/textColor"
+            app:layout_constraintBottom_toTopOf="@id/guideline"
+            app:layout_constraintLeft_toRightOf="@id/trailerNameTextView"
+            app:layout_constraintTop_toTopOf="@id/guideline"
+            tools:text="1080p" />
+
+
+    </android.support.constraint.ConstraintLayout>
+</layout>
