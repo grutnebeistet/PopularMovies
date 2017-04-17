@@ -12,13 +12,15 @@ import com.firebase.jobdispatcher.Job;
 import com.firebase.jobdispatcher.Lifetime;
 import com.firebase.jobdispatcher.Trigger;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Created by Adrian on 16/04/2017.
  */
 
 public class SyncUtils {
     private static final int SYNC_INTERVAL_HOURS = 12;
-    private static final int SYNC_INTERVAL_SECONDS = 10; //(int) TimeUnit.HOURS.toSeconds(SYNC_INTERVAL_HOURS);
+    private static final int SYNC_INTERVAL_SECONDS = (int) TimeUnit.HOURS.toSeconds(SYNC_INTERVAL_HOURS);
     private static final int SYNC_FLEXTIME_SECONDS = SYNC_INTERVAL_SECONDS / 3;
 
     private static final String MOVIES_SYNC_TAG = "movies-sync";

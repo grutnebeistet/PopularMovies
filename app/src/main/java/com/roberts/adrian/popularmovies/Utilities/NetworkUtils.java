@@ -136,6 +136,7 @@ public class NetworkUtils extends AsyncTask<Integer, Void, MovieExtraData> {
                     if (cursor == null || cursor.getCount() == 0) {
                         contentResolver.insert(MovieContract.MovieEntry.CONTENT_URI, values);
                     }
+                    cursor.close();
                 }
             }
 

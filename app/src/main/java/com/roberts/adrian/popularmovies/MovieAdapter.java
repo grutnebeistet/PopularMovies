@@ -106,9 +106,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
         /*final int padding = mContext.getResources().getDimensionPixelSize(R.dimen.padding_small);
         holder.itemView.setPadding(padding, padding, padding, padding);
         //.addItemDecoration(new SpacesItemDecoration(padding));*/
-        int w = holder.movieThumbnailImageView.getWidth();
-        int h = holder.movieThumbnailImageView.getHeight();
-
 
         holder.itemView.setTag(id);
 

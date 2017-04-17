@@ -141,11 +141,7 @@ public class MainActivity extends AppCompatActivity
 
 
         int gridSpan = calculateNoOfColumns(getApplicationContext());
-        if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            //gridSpan = 2;
-        } else {
-            //  gridSpan = 3;
-        }
+
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), gridSpan);
         moviesRecyclerView.setLayoutManager(layoutManager);
         moviesRecyclerView.setHasFixedSize(true);
@@ -157,10 +153,10 @@ public class MainActivity extends AppCompatActivity
         moviesRecyclerView.addItemDecoration(itemDecoration);
 
         //holder.itemView.setPadding(padding, padding, padding, padding);
-        // moviesRecyclerView.addItemDecoration(new SpacesItemDecoration(padding));
+         //moviesRecyclerView.addItemDecoration(new SpacesItemDecoration(padding));
         Log.i(LOG_TAG, "PADDING: " + padding);
         boolean includeEdge = true;
-        //   moviesRecyclerView.addItemDecoration(new GridSpacingItemDecoration(gridSpan, padding, includeEdge));
+          // moviesRecyclerView.addItemDecoration(new GridSpacingItemDecoration(gridSpan, padding, includeEdge));
 
         Log.i(LOG_TAG, "main Act TAG: " + findViewById(R.id.drawer_layout).getTag());
         String orderPref;
@@ -183,6 +179,7 @@ public class MainActivity extends AppCompatActivity
 
         moviesRecyclerView.setAdapter(movieAdapter);
 
+        Log.i(LOG_TAG, "instancestate = null" + (savedInstanceState == null));
         boolean isConnected = NetworkUtils.workingConnection(this);
         LoaderManager loaderManager = getLoaderManager();
         // if cursor is saved use it
@@ -192,7 +189,7 @@ public class MainActivity extends AppCompatActivity
 
             // showLoading();
         }
-        if (savedInstanceState == null && !isConnected) {
+       else if (savedInstanceState == null && !isConnected) {
             loaderManager.initLoader(MOVIE_LOADER_ID, null, this);
             showEmptyView();
 
@@ -208,7 +205,6 @@ public class MainActivity extends AppCompatActivity
         String mPrefOrderBby = userPreferences.getString(getString(R.string.settings_order_by_key),
                 getString(R.string.settings_order_by_default));
         outState.putString("userPref", mPrefOrderBby);
-
 
 
     }
@@ -233,6 +229,7 @@ public class MainActivity extends AppCompatActivity
         newValue.put(MovieContract.MovieEntry.COLUMN_MOVIE_BY_FAVOURITE, 0);
         resolver.update(uri, newValue, null, null);
     }
+
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -335,12 +332,13 @@ public class MainActivity extends AppCompatActivity
 
     void showMoviesView() {
         Log.i(LOG_TAG, "showMoviesView");
-        progressBar.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.GONE);
         moviesRecyclerView.setVisibility(View.VISIBLE);
-        emptyView.setVisibility(View.INVISIBLE);
+        emptyView.setVisibility(View.GONE);
     }
 
     void showEmptyView() {
+        Log.i(LOG_TAG, "showEmptyView");
         progressBar.setVisibility(View.INVISIBLE);
         moviesRecyclerView.setVisibility(View.INVISIBLE);
         emptyView.setVisibility(View.VISIBLE);
