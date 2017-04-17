@@ -20,7 +20,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
@@ -33,7 +32,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.roberts.adrian.popularmovies.data.MovieContract;
+import com.roberts.adrian.popularmovies.utilities.ItemOffsetDecoration;
 import com.roberts.adrian.popularmovies.utilities.NetworkUtils;
+import com.roberts.adrian.popularmovies.utilities.SyncUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -146,11 +147,22 @@ public class MainActivity extends AppCompatActivity
             //  gridSpan = 3;
         }
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), gridSpan);
-
         moviesRecyclerView.setLayoutManager(layoutManager);
         moviesRecyclerView.setHasFixedSize(true);
 
 
+        final int padding = getResources().getDimensionPixelSize(R.dimen.padding_small);
+
+        ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(this, R.dimen.padding_small);
+        moviesRecyclerView.addItemDecoration(itemDecoration);
+
+        //holder.itemView.setPadding(padding, padding, padding, padding);
+        // moviesRecyclerView.addItemDecoration(new SpacesItemDecoration(padding));
+        Log.i(LOG_TAG, "PADDING: " + padding);
+        boolean includeEdge = true;
+        //   moviesRecyclerView.addItemDecoration(new GridSpacingItemDecoration(gridSpan, padding, includeEdge));
+
+        Log.i(LOG_TAG, "main Act TAG: " + findViewById(R.id.drawer_layout).getTag());
         String orderPref;
         orderPref = userPreferences.getString(getString(R.string.settings_order_by_key), getString(R.string.settings_order_by_default));
         Log.i(LOG_TAG, "orderPref onCreate " + orderPref);
@@ -171,42 +183,22 @@ public class MainActivity extends AppCompatActivity
 
         moviesRecyclerView.setAdapter(movieAdapter);
 
-
-        /** Gives user the opportunity to swipe out movies from the list. Should be enabled only for favourites TODO */
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-
-                long id = (long) viewHolder.itemView.getTag();
-
-                removeFavouriteMovie(id);
-
-                //update the list
-                movieAdapter.swapCursor(null);
-            }
-
-        }).attachToRecyclerView(moviesRecyclerView);
-
-
         boolean isConnected = NetworkUtils.workingConnection(this);
         LoaderManager loaderManager = getLoaderManager();
         // if cursor is saved use it
-        if (isConnected) {
+        if (savedInstanceState == null && isConnected) {
             loaderManager.initLoader(MOVIE_LOADER_ID, null, this);
             NetworkUtils.initializeQueryMain(this);
 
             // showLoading();
         }
-        if (!isConnected) {
+        if (savedInstanceState == null && !isConnected) {
             loaderManager.initLoader(MOVIE_LOADER_ID, null, this);
             showEmptyView();
 
         }
+
+        SyncUtils.initialize(this);
 
     }
 
@@ -216,6 +208,7 @@ public class MainActivity extends AppCompatActivity
         String mPrefOrderBby = userPreferences.getString(getString(R.string.settings_order_by_key),
                 getString(R.string.settings_order_by_default));
         outState.putString("userPref", mPrefOrderBby);
+
 
 
     }

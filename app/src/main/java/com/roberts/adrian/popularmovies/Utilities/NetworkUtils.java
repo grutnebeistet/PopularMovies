@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
@@ -20,6 +21,7 @@ import com.roberts.adrian.popularmovies.MovieReview;
 import com.roberts.adrian.popularmovies.MovieTrailer;
 import com.roberts.adrian.popularmovies.R;
 import com.roberts.adrian.popularmovies.data.MovieContract;
+import com.roberts.adrian.popularmovies.data.MovieDbHelper;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -94,12 +96,65 @@ public class NetworkUtils extends AsyncTask<Integer, Void, MovieExtraData> {
         return url;
     }
 
+    // Updating both Popular and High Rated movie tables, called from FirebaseJobService
+    public static void updateMovieLists(Context context) {
+        try {
+            URL popMovies = createUrlFromString(baseUri.buildUpon()
+                    .appendPath("popular").appendQueryParameter(API_LABEL, API_KEY).toString());
+
+
+            URL ratedMovies = createUrlFromString(baseUri.buildUpon()
+                    .appendPath("top_rated").appendQueryParameter(API_LABEL, API_KEY).toString());
+
+            String popJson = httpRequest(popMovies);
+            String ratedJson = httpRequest(ratedMovies);
+
+            ContentValues[] popValues = JsonUtils.getMovieContentValuesFromJson(context, popJson);
+            ContentValues[] ratedValues = JsonUtils.getMovieContentValuesFromJson(context, ratedJson);
+            ContentValues[] allMovies = new ContentValues[popValues.length + ratedValues.length];
+            System.arraycopy(popValues, 0, allMovies, 0, popValues.length);
+            System.arraycopy(ratedValues, 0, allMovies, popValues.length, ratedValues.length);
+
+            if (allMovies.length != 0){
+                ContentResolver contentResolver = context.getContentResolver();
+                // Look through IDs, add new ones
+
+                MovieDbHelper dbHelper = new MovieDbHelper(context);
+                SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+                for (ContentValues values : allMovies) {
+                    int id = values.getAsInteger(MovieContract.MovieEntry.COLUMN_MOVIE_ID);
+                    String where = MovieContract.MovieEntry.COLUMN_MOVIE_ID + " = ?";
+                    String[] arg = {"" + id};
+                    Cursor cursor = db.query(MovieContract.MovieEntry.TABLE_NAME,
+                            null,
+                            where,
+                            arg,
+                            null,
+                            null,
+                            null);
+                    if (cursor == null || cursor.getCount() == 0) {
+                        contentResolver.insert(MovieContract.MovieEntry.CONTENT_URI, values);
+                    }
+                }
+            }
+
+        } catch (
+                Exception e)
+
+        {
+            Log.e(LOG_TAG, e.getMessage());
+        }
+
+    }
+
     /**
      * Main fetching method, used to acquire and insert contentValues from main query
      * http://api.themoviedb.org/3/movie/popular or .../movie/top_rated
      *
      * @param context
      */
+
     public static void fetchMovieData(Context context) {
         try {
             URL movieQueryUrl = getUrl(context);
@@ -109,11 +164,8 @@ public class NetworkUtils extends AsyncTask<Integer, Void, MovieExtraData> {
 
             if (moviesContentValues != null && moviesContentValues.length != 0) {
                 ContentResolver contentResolver = context.getContentResolver();
-                Log.i(LOG_TAG, "Fått content setter opp resolver");
 
 
-                // Insert new data
-                Log.i(LOG_TAG, "caller BULK");
                 contentResolver.bulkInsert(
                         MovieContract.MovieEntry.CONTENT_URI,
                         moviesContentValues
@@ -128,7 +180,7 @@ public class NetworkUtils extends AsyncTask<Integer, Void, MovieExtraData> {
                     String url = values.getAsString(MovieContract.MovieEntry.COLUMN_MOVIE_POSTER);
                     int id = values.getAsInteger(MovieContract.MovieEntry.COLUMN_MOVIE_ID);
                     Uri uri = ContentUris.withAppendedId(MovieContract.MovieEntry.CONTENT_URI, id);
-                    Log.i(LOG_TAG, "getasstring: " + url);
+                    // Log.i(LOG_TAG, "getasstring: " + url);
 
                     Bitmap poster = null;
                     try {
@@ -150,7 +202,6 @@ public class NetworkUtils extends AsyncTask<Integer, Void, MovieExtraData> {
         } catch (Exception e) {
             Log.e(LOG_TAG, e.getMessage());
         }
-
     }
 
     /**

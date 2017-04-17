@@ -4,14 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:tag="drLand">
 
-    <FrameLayout
+    <RelativeLayout
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorPrimary"
-        android:fitsSystemWindows="true"
         tools:context="com.roberts.adrian.popularmovies.MainActivity">
 
        <ProgressBar
@@ -27,6 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textAppearance="?android:textAppearanceMedium"
+            android:layout_centerInParent="true"
             android:textColor="@color/colorAccent"
             tools:text="@string/empty_view_text">
 
@@ -34,15 +35,12 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerViewMain"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/recyclerView_margin"
-            android:layout_marginStart="@dimen/recyclerView_margin"
-            android:layout_marginEnd="@dimen/recyclerView_margin"
-            android:layout_marginRight="@dimen/recyclerView_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:clipToPadding="false" />
 
-    </FrameLayout>
+    </RelativeLayout>
 
     <!-- The navigation drawer -->
     <ListView

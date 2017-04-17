@@ -4,12 +4,11 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
-    android:id="@+id/grid_item"
-    android:background="@drawable/recycler_item_selector"
-    android:tag="gridDef">
+    android:tag="grid600"
+    android:background="@drawable/recycler_item_selector">
     <ImageView
-        android:layout_width="185dp"
-        android:layout_height="278dp"
+        android:layout_width="200dp"
+        android:layout_height="300dp"
         android:id="@+id/grid_item_image_view" />
 
 </LinearLayout>

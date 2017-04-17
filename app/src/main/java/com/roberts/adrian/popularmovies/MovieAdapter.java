@@ -70,6 +70,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
     public MovieAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(mContext).inflate(R.layout.grid_item, parent, false);
+        Log.i(LOG_TAG, "Grid TAG: " + view.getTag());
         view.setFocusable(true);
         return new MovieAdapterViewHolder(view);
     }
@@ -89,10 +90,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
             byte[] thumbnailBarray = mCursor.getBlob(MainActivity.INDEX_STORED_THUMBNAIL);
             Bitmap thumbnail = BitmapFactory.decodeByteArray(thumbnailBarray, 0, thumbnailBarray.length);
             holder.movieThumbnailImageView.setImageBitmap(thumbnail);
+           // Log.i(LOG_TAG, "BITMAP HEIGHGT: " + thumbnail.getHeight() + "\n WIDTH: " + thumbnail.getWidth());
+           // Log.i(LOG_TAG, "Using stored image");
         }
         // Using picasso to load and insert thumbnail with url stored in the database
         else {
-            Log.i(LOG_TAG, "no has blob, picassoing");
+          //  Log.i(LOG_TAG, "no has blob, picassoing");
             String thumbnailUrl = mCursor.getString(MainActivity.INDEX_MOVIE_THUMBNAIL);
             Picasso.with(mContext)
                     .load(thumbnailUrl).fit()
@@ -100,8 +103,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
                     .error(ic_place_holder)
                     .into(holder.movieThumbnailImageView);
         }
-        final int padding = mContext.getResources().getDimensionPixelSize(R.dimen.padding_small);
+        /*final int padding = mContext.getResources().getDimensionPixelSize(R.dimen.padding_small);
         holder.itemView.setPadding(padding, padding, padding, padding);
+        //.addItemDecoration(new SpacesItemDecoration(padding));*/
+        int w = holder.movieThumbnailImageView.getWidth();
+        int h = holder.movieThumbnailImageView.getHeight();
+
 
         holder.itemView.setTag(id);
 

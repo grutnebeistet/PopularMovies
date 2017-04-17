@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/grid_item"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
-    android:id="@+id/grid_item"
     android:background="@drawable/recycler_item_selector"
-    android:tag="gridDef">
+    android:tag="grid400Land">
     <ImageView
-        android:layout_width="185dp"
-        android:layout_height="278dp"
+        android:layout_width="213dp"
+        android:layout_height="320dp"
         android:id="@+id/grid_item_image_view" />
 
 </LinearLayout>

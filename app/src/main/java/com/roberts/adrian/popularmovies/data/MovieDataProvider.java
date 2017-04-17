@@ -121,18 +121,19 @@ public class MovieDataProvider extends ContentProvider {
                 selection = MovieEntry.COLUMN_MOVIE_ID + "=?";
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
                 rowsUpdated = db.update(MovieEntry.TABLE_NAME, contentValues, selection, selectionArgs);
-                Log.i(LOG_TAG, "updated movie");
+                // Log.i(LOG_TAG, "updated movie");
                 break;
             default:
                 throw new IllegalArgumentException("Cannot update for given uri " + uri);
         }
-      //  if (rowsUpdated != 0) getContext().getContentResolver().notifyChange(uri, null);
+        //  if (rowsUpdated != 0) getContext().getContentResolver().notifyChange(uri, null);
         return rowsUpdated;
     }
 
     @Override
     public int bulkInsert(@NonNull Uri uri, @NonNull ContentValues[] values) {
         final SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        final SQLiteDatabase rDb = mDbHelper.getReadableDatabase();
 
         switch (mUriMatcher.match(uri)) {
 
@@ -141,10 +142,14 @@ public class MovieDataProvider extends ContentProvider {
                 int rowsInserted = 0;
                 try {
                     for (ContentValues value : values) {
-                        long _id = db.insert(MovieEntry.TABLE_NAME, null, value);
-                        if (_id != -1) {
+                        // To not try insertion on existing movie
+                        if (value.get(MovieEntry.COLUMN_MOVIE_BY_FAVOURITE).equals(0)){
+                            long _id = db.insert(MovieEntry.TABLE_NAME, null, value);
 
-                            rowsInserted++;
+                            if (_id != -1) {
+
+                                rowsInserted++;
+                            }
                         }
                     }
                     db.setTransactionSuccessful();
@@ -155,7 +160,7 @@ public class MovieDataProvider extends ContentProvider {
                 if (rowsInserted > 0) {
                     getContext().getContentResolver().notifyChange(uri, null);
                 }
-                Log.i(LOG_TAG, "inserted: "  + rowsInserted + " rows");
+                Log.i(LOG_TAG, "inserted: " + rowsInserted + " rows");
                 return rowsInserted;
 
             default:

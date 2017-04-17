@@ -10,7 +10,7 @@
     <dimen name="large_text">56sp</dimen>
     <dimen name="padding_standard">8dp</dimen>
     <dimen name="padding_large">16dp</dimen>
-    <dimen name="padding_small">4dp</dimen>
+    <dimen name="padding_small">6dp</dimen>
     <dimen name="details_header_height">260dp</dimen>
     <dimen name="save_button">105dp</dimen>
 </resources>

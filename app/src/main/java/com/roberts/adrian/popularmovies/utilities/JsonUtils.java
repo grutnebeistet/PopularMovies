@@ -62,6 +62,7 @@ public class JsonUtils {
             int store_as_popular = orderBy.equals(context.getString(R.string.settings_order_by_popularity_value)) ? 1 : 0;
 
             String thumbnailUrl = BASE_POSTER_PATH_URL.concat(DEFAULT_POSTER_SIZE).concat(thumbnailKey);
+           // Log.i(LOG_TAG, thumbnailUrl);
             String backposterUrl = BASE_POSTER_PATH_URL.concat(DEFAULT_BACKPOSTER_SIZE).concat(backposterKey);
             Bitmap thumbnailBitmap = null;
 
@@ -74,6 +75,7 @@ public class JsonUtils {
             }
             ByteArrayOutputStream bosThumb = new ByteArrayOutputStream();
             thumbnailBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bosThumb);
+
             byte[] thumbnailByteArray = bosThumb.toByteArray();
 
             values.put(MovieEntry.COLUMN_STORED_MOVIE_THUMBNAIL, thumbnailByteArray);
