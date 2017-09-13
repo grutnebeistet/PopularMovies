@@ -64,4 +64,7 @@
     <string name="review_author_label">Review by %s</string>
 
     <string name="loading_text">Loading ...</string>
+
+    <string name="toast_favourite_added" translatable="true">Added to favourites</string>
+    <string name="toast_favourite_removed" translatable="true">Removed from favourites</string>
 </resources>

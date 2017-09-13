@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.roberts.adrian.popularmovies.data.MovieContract;
 import com.roberts.adrian.popularmovies.databinding.ActivityMovieDetailsBinding;
@@ -245,9 +246,11 @@ public class MovieDetailsActivity extends AppCompatActivity
         if (!isFavourite) {
             newValues.put(MovieContract.MovieEntry.COLUMN_MOVIE_BY_FAVOURITE, IS_FAVOURITE);
             isFavourite = true;
+            Toast.makeText(this, R.string.toast_favourite_added, Toast.LENGTH_SHORT).show();
         } else {
             newValues.put(MovieContract.MovieEntry.COLUMN_MOVIE_BY_FAVOURITE, IS_NOT_FAVOURITE);
             isFavourite = false;
+            Toast.makeText(this, R.string.toast_favourite_removed, Toast.LENGTH_SHORT).show();
         }
         contentResolver.update(mUri, newValues, null, null);
         contentResolver.notifyChange(mUri, null);

@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="5"
-            android:textColor="@color/textColor"
+            android:textColor="@color/textColorDark"
             android:textStyle="italic"
             android:layout_marginBottom="@dimen/padding_large"
             app:layout_constraintBottom_toBottomOf="parent"

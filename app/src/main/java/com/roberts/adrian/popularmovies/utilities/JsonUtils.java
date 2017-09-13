@@ -34,7 +34,6 @@ public class JsonUtils {
 
     public static ContentValues[] getMovieContentValuesFromJson(Context context, String jsonResponse)
             throws JSONException {
-        Log.i(LOG_TAG, "JSON EXPERIENCE");
 
         SharedPreferences userPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         String orderBy = userPreferences.getString(

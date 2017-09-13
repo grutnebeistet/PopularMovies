@@ -87,6 +87,7 @@ public class NetworkUtils extends AsyncTask<Integer, Void, MovieExtraData> {
      * @return
      */
     private static URL createUrlFromString(String stringUrl) {
+        Log.e(LOG_TAG,stringUrl);
         URL url = null;
         try {
             url = new URL(stringUrl);
@@ -115,7 +116,7 @@ public class NetworkUtils extends AsyncTask<Integer, Void, MovieExtraData> {
             System.arraycopy(popValues, 0, allMovies, 0, popValues.length);
             System.arraycopy(ratedValues, 0, allMovies, popValues.length, ratedValues.length);
 
-            if (allMovies.length != 0){
+            if (allMovies.length != 0) {
                 ContentResolver contentResolver = context.getContentResolver();
                 // Look through IDs, add new ones
 
@@ -362,6 +363,7 @@ public class NetworkUtils extends AsyncTask<Integer, Void, MovieExtraData> {
      * @return a string of raw JSON data
      */
     private static String httpRequest(URL queryUrl) throws IOException {
+        Log.i(LOG_TAG, "URL URL URL " + queryUrl.toString());
         String jsonResponse = "";
         // return early if URL is empty
         if (queryUrl == null) return jsonResponse;

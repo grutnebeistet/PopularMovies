@@ -1,9 +1,7 @@
 package com.roberts.adrian.popularmovies;
 
 import android.app.LoaderManager;
-import android.content.ContentResolver;
 import android.content.ContentUris;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
@@ -140,10 +138,12 @@ public class MainActivity extends AppCompatActivity
         mDrawerLayout.addDrawerListener(mDrawerToggle);
 
 
-        int gridSpan = calculateNoOfColumns(getApplicationContext());
+        movieAdapter = new MovieAdapter(this, this);
+        moviesRecyclerView.setAdapter(movieAdapter);
 
+        int gridSpan = calculateNoOfColumns(getApplicationContext());
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), gridSpan);
-        moviesRecyclerView.setLayoutManager(layoutManager);
+        moviesRecyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(),gridSpan));
         moviesRecyclerView.setHasFixedSize(true);
 
 
@@ -175,9 +175,6 @@ public class MainActivity extends AppCompatActivity
         }
 
 
-        movieAdapter = new MovieAdapter(this, this);
-
-        moviesRecyclerView.setAdapter(movieAdapter);
 
         Log.i(LOG_TAG, "instancestate = null" + (savedInstanceState == null));
         boolean isConnected = NetworkUtils.workingConnection(this);
@@ -220,15 +217,6 @@ public class MainActivity extends AppCompatActivity
         return noOfColumns;
     }
 
-    void removeFavouriteMovie(long id) {
-        ContentResolver resolver = getContentResolver();
-        Uri uri = ContentUris.withAppendedId(MovieContract.MovieEntry.CONTENT_URI, id);
-
-        //  resolver.delete(uri, null, null);
-        ContentValues newValue = new ContentValues();
-        newValue.put(MovieContract.MovieEntry.COLUMN_MOVIE_BY_FAVOURITE, 0);
-        resolver.update(uri, newValue, null, null);
-    }
 
 
     @Override
