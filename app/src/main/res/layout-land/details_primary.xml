@@ -24,21 +24,22 @@
         </LinearLayout>
 
         // container for left and right part
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             // Primary details info left
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="7"
                 android:orientation="vertical"
-                android:paddingLeft="@dimen/activity_vertical_margin"
-                android:paddingTop="@dimen/activity_horizontal_margin"
                 android:paddingBottom="@dimen/activity_vertical_margin"
-                >
+                android:paddingLeft="@dimen/activity_vertical_margin"
+                android:paddingTop="@dimen/activity_horizontal_margin">
 
                 <TextView
                     android:id="@+id/tv_movieDetails_title"
@@ -53,46 +54,55 @@
                     android:fontFamily="sans-serif-light"
                     android:textSize="@dimen/medium_text" />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin">
 
-                <TextView
-                    android:id="@+id/tv_movieDetails_releaseDate"
-                    style="@style/movieDetailTextViewStyle"
-                    android:paddingTop="@dimen/padding_standard"
-                    android:textSize="@dimen/medium_text" />
+                    <TextView
+                        android:id="@+id/tv_movieDetails_releaseDate"
+                        style="@style/movieDetailTextViewStyle"
+                        android:paddingTop="@dimen/padding_standard"
+                        android:textColor="@color/textColorDark"
+                        android:textSize="@dimen/medium_text" />
 
 
-                <TextView
-                    android:id="@+id/tv_movieDetails_runtime"
-                    style="@style/movieDetailTextViewStyle"
-                    android:paddingBottom="@dimen/padding_standard"
-                    android:paddingTop="@dimen/padding_small"
-                    android:textColor="@color/textColor"
-                    android:textStyle="italic" />
+                    <TextView
+                        android:id="@+id/tv_movieDetails_runtime"
+                        style="@style/movieDetailTextViewStyle"
+                        android:paddingBottom="@dimen/padding_standard"
+                        android:paddingTop="@dimen/padding_small"
+                        android:textColor="@color/textColorDark"
+                        android:textStyle="italic" />
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tv_movieDetails_overview"
                     style="@style/movieDetailTextViewStyle"
-                    android:textSize="@dimen/small_text"
-                    android:textColor="@color/textColor" />
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/small_text" />
 
 
             </LinearLayout>
 
             // Primary details info right
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
                 android:layout_marginTop="@dimen/activity_vertical_margin_large"
+                android:layout_weight="3"
                 android:orientation="vertical">
+
                 <LinearLayout
                     android:id="@+id/favourite_button_surrounding"
                     android:layout_width="@dimen/save_button"
                     android:layout_height="@dimen/save_button"
-                    android:onClick="saveAsFavourite"
                     android:layout_gravity="center"
-                    android:orientation="vertical"
-                    android:layout_marginBottom="@dimen/activity_vertical_margin_large">
+                    android:layout_marginBottom="@dimen/activity_vertical_margin_large"
+                    android:onClick="saveAsFavourite"
+                    android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/save_button"

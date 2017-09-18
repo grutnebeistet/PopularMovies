@@ -5,8 +5,8 @@
     <color name="colorPrimaryLight">#B2DFDB</color>
     <color name="colorAccent">#9A0000</color> <!--FF4081-->
 
-    <color name="textColor">#fff</color>
-    <color name="textColorDark">#666666</color>
+    <color name="textColor">#f7f7f7</color>
+    <color name="textColorDark">#bababa</color>
 
     <color name="translucent_black">#80000000</color>
 
