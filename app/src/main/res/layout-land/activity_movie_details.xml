@@ -25,7 +25,30 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/padding_standard"
+                    android:padding="@dimen/activity_vertical_margin">
 
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerview_images"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clipToPadding="false"
+                        android:orientation="horizontal"
+                    />
+                </RelativeLayout>
+                <TextView
+                    android:id="@+id/tv_TrailerLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    android:textColor="@color/textColor"
+                    android:paddingLeft="@dimen/activity_vertical_margin_large"
+                    android:paddingStart="@dimen/activity_vertical_margin_large"
+                    tools:text="Trailers" />
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerview_trailers"
                     android:layout_width="match_parent"
@@ -41,8 +64,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/activity_horizontal_margin"
                     android:paddingBottom="@dimen/padding_standard"
-                    android:paddingLeft="@dimen/activity_vertical_margin"
-                    android:paddingStart="@dimen/activity_vertical_margin"
+                    android:paddingLeft="@dimen/activity_vertical_margin_large"
+                    android:paddingStart="@dimen/activity_vertical_margin_large"
                     android:textAppearance="@style/TextAppearance.AppCompat.Title"
                     android:textColor="@color/textColor" />
 
@@ -52,15 +75,11 @@
                     android:layout_height="wrap_content"
                     android:clipToPadding="false"
                     android:paddingBottom="@dimen/padding_standard"
-                    android:paddingRight="@dimen/activity_vertical_margin"
-                    android:paddingLeft="@dimen/activity_vertical_margin_large"
-                    android:paddingStart="@dimen/activity_vertical_margin_large" />
-
-
+                    android:paddingLeft="@dimen/activity_vertical_margin_xtra_large"
+                    android:paddingStart="@dimen/activity_vertical_margin_xtra_large"
+                    android:paddingRight="@dimen/activity_vertical_margin_xtra_large"
+                    android:paddingEnd="@dimen/activity_vertical_margin_xtra_large"/>
             </LinearLayout>
-
-
-
         </LinearLayout>
     </ScrollView>
 </layout>

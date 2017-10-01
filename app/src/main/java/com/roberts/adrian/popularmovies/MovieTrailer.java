@@ -7,7 +7,8 @@ import android.os.Parcelable;
  * Created by Adrian on 15/03/2017.
  */
 
-public class MovieTrailer implements Parcelable {
+public class
+MovieTrailer implements Parcelable {
     private String mVideoTitle;
     private String mVideoKey;
     private int mVideoSize;

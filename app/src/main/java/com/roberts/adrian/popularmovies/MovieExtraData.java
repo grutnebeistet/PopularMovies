@@ -13,10 +13,14 @@ public class MovieExtraData implements Parcelable {
 
     private ArrayList<MovieTrailer> movieTrailers;
     private ArrayList<MovieReview> movieReviews;
+    private ArrayList<String> movieImages;
 
-    public MovieExtraData(ArrayList<MovieTrailer> trailers, ArrayList<MovieReview> reviews) {
+    public MovieExtraData(ArrayList<MovieTrailer> trailers,
+                          ArrayList<MovieReview> reviews,
+                          ArrayList<String> images) {
         movieTrailers = trailers;
         movieReviews = reviews;
+        movieImages = images;
 
 
     }
@@ -24,6 +28,7 @@ public class MovieExtraData implements Parcelable {
     public MovieExtraData(Parcel in) {
         movieTrailers = in.readArrayList(MovieTrailer.class.getClassLoader());
         movieReviews = in.readArrayList(MovieReview.class.getClassLoader());
+        movieImages = in.readArrayList(null);
 
     }
 
@@ -47,6 +52,7 @@ public class MovieExtraData implements Parcelable {
     public void writeToParcel(Parcel movieData, int i) {
         movieData.writeList(movieTrailers);
         movieData.writeList(movieReviews);
+        movieData.writeList(movieImages);
     }
 
     public ArrayList<MovieReview> getMovieReviews() {
@@ -57,4 +63,7 @@ public class MovieExtraData implements Parcelable {
         return movieTrailers;
     }
 
+    public ArrayList<String> getMovieImages() {
+        return movieImages;
+    }
 }

@@ -38,6 +38,7 @@ import static android.content.Context.CONNECTIVITY_SERVICE;
 import static com.roberts.adrian.popularmovies.data.MovieContract.API_KEY;
 import static com.roberts.adrian.popularmovies.data.MovieContract.API_LABEL;
 import static com.roberts.adrian.popularmovies.data.MovieContract.BASE_MDB_URL;
+import static com.roberts.adrian.popularmovies.data.MovieContract.MOVIE_IMAGES_PATH;
 import static com.roberts.adrian.popularmovies.data.MovieContract.MOVIE_REVIEWS_PATH;
 import static com.roberts.adrian.popularmovies.data.MovieContract.MOVIE_TRAILERS_PATH;
 
@@ -279,29 +280,40 @@ public class NetworkUtils extends AsyncTask<Integer, Void, MovieExtraData> {
                 .appendPath(MOVIE_REVIEWS_PATH)
                 .appendQueryParameter(API_LABEL, API_KEY);
 
+        Uri.Builder uriBuilderImages
+                = baseUri.buildUpon()
+                .appendPath(String.valueOf(movieId))
+                .appendPath(MOVIE_IMAGES_PATH)
+                .appendQueryParameter(API_LABEL,API_KEY);
+
 
         String trailersUrl = uriBuilderTrailers.toString();
-        Log.i(LOG_TAG, trailersUrl);
+        Log.i(LOG_TAG, "trailers: " + trailersUrl);
         String reviewsUrl = uriBuilderReviews.toString();
         Log.i(LOG_TAG, reviewsUrl);
+        String imagesUrl = uriBuilderImages.toString();
 
         URL queryUrlTrailers = createUrlFromString(trailersUrl);
         URL queryUrlReviews = createUrlFromString(reviewsUrl);
+        URL queryUrlImages = createUrlFromString(imagesUrl);
 
         String trailersJson = "";
         String reviewsJson = "";
+        String imagesJson = "";
 
         try {
             trailersJson = httpRequest(queryUrlTrailers);
             reviewsJson = httpRequest(queryUrlReviews);
+            imagesJson = httpRequest(queryUrlImages);
             Log.i(LOG_TAG, "TrailerJSON " + trailersJson);
         } catch (IOException ioe) {
             Log.e(LOG_TAG, ioe.getMessage());
         }
         ArrayList<MovieTrailer> videoTrailers = JsonUtils.parseJsonTrailers(trailersJson);
         ArrayList<MovieReview> videoReviews = JsonUtils.parseJsonReviews(reviewsJson);
+        ArrayList<String> videoImages = JsonUtils.parseJsonImages(imagesJson);
 
-        return new MovieExtraData(videoTrailers, videoReviews);
+        return new MovieExtraData(videoTrailers, videoReviews, videoImages);
     }
 
     @Override

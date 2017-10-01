@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
@@ -25,125 +26,117 @@
 
         // container for left and right part
 
-        <LinearLayout
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            // Primary details info left
+            android:background="@drawable/elevation_rect"
+            android:layout_margin="@dimen/activity_vertical_margin"
+            android:elevation="8dp"
+            card_view:cardBackgroundColor="@color/colorSemiDark"
+            card_view:cardCornerRadius="16dp">
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="7"
-                android:orientation="vertical"
-                android:paddingBottom="@dimen/activity_vertical_margin"
-                android:paddingLeft="@dimen/activity_vertical_margin"
-                android:paddingTop="@dimen/activity_horizontal_margin">
+                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/tv_movieDetails_title"
-                    style="@style/movieDetailTextViewStyle"
-                    android:fontFamily="sans-serif-light"
-                    android:textSize="@dimen/large_text"
-                    tools:text="Interstellar" />
-
-                <TextView
-                    android:id="@+id/tv_movieDetails_title_EN"
-                    style="@style/movieDetailTextViewStyle"
-                    android:fontFamily="sans-serif-light"
-                    android:textSize="@dimen/medium_text" />
+                // Primary details info left
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="@dimen/activity_horizontal_margin">
+                    android:layout_weight="7"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/activity_vertical_margin"
+                    android:paddingLeft="@dimen/activity_vertical_margin_large"
+                    android:paddingTop="@dimen/activity_horizontal_margin">
 
                     <TextView
-                        android:id="@+id/tv_movieDetails_releaseDate"
+                        android:id="@+id/tv_movieDetails_title"
                         style="@style/movieDetailTextViewStyle"
-                        android:paddingTop="@dimen/padding_standard"
-                        android:textColor="@color/textColorDark"
+                        android:fontFamily="sans-serif-light"
+                        android:textSize="@dimen/large_text"
+                        tools:text="Interstellar" />
+
+                    <TextView
+                        android:id="@+id/tv_movieDetails_title_EN"
+                        style="@style/movieDetailTextViewStyle"
+                        android:fontFamily="sans-serif-light"
                         android:textSize="@dimen/medium_text" />
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_movieDetails_releaseDate"
+                            style="@style/movieDetailTextViewStyle"
+                            android:paddingTop="@dimen/padding_standard"
+                            android:textColor="@color/textColorDark"
+                            android:textSize="@dimen/medium_text" />
+
+
+                        <TextView
+                            android:id="@+id/tv_movieDetails_runtime"
+                            style="@style/movieDetailTextViewStyle"
+                            android:paddingBottom="@dimen/padding_standard"
+                            android:paddingTop="@dimen/padding_small"
+                            android:textColor="@color/textColorDark"
+                            android:textStyle="italic" />
+                    </LinearLayout>
 
                     <TextView
-                        android:id="@+id/tv_movieDetails_runtime"
+                        android:id="@+id/tv_movieDetails_overview"
                         style="@style/movieDetailTextViewStyle"
-                        android:paddingBottom="@dimen/padding_standard"
-                        android:paddingTop="@dimen/padding_small"
-                        android:textColor="@color/textColorDark"
-                        android:textStyle="italic" />
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/small_text" />
+
+
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tv_movieDetails_overview"
-                    style="@style/movieDetailTextViewStyle"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/small_text" />
-
-
-            </LinearLayout>
-
-            // Primary details info right
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_vertical_margin_large"
-                android:layout_weight="3"
-                android:orientation="vertical">
+                // Primary details info right
 
                 <LinearLayout
-                    android:id="@+id/favourite_button_surrounding"
-                    android:layout_width="@dimen/save_button"
-                    android:layout_height="@dimen/save_button"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="@dimen/activity_vertical_margin_large"
-                    android:onClick="saveAsFavourite"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_vertical_margin_xtra_large"
+                    android:layout_weight="3"
                     android:orientation="vertical">
 
-                    <ImageView
-                        android:id="@+id/save_button"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                    <LinearLayout
+                        android:id="@+id/favourite_button_surrounding"
+                        android:layout_width="@dimen/save_button"
+                        android:layout_height="@dimen/save_button"
                         android:layout_gravity="center"
-                        android:background="@drawable/favourite_selector"
-                        android:onClick="saveAsFavourite" />
+                        android:layout_marginBottom="@dimen/activity_horizontal_margin_large"
+                        android:onClick="saveAsFavourite"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/save_button"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:background="@drawable/favourite_selector"
+                            android:onClick="saveAsFavourite" />
+
+                    </LinearLayout>
+
+                    <RatingBar
+                        android:id="@+id/rb_movieDetails_rating"
+                        style="?android:attr/ratingBarStyleIndicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:paddingTop="@dimen/padding_large">
+
+                    </RatingBar>
 
                 </LinearLayout>
-
-                <RatingBar
-                    android:id="@+id/rb_movieDetails_rating"
-                    style="?android:attr/ratingBarStyleIndicator"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:paddingTop="@dimen/padding_large">
-
-                </RatingBar>
-
             </LinearLayout>
-        </LinearLayout>
+        </android.support.v7.widget.CardView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/activity_vertical_margin"
-            android:paddingStart="@dimen/activity_vertical_margin">
-
-            <TextView
-                android:id="@+id/tv_TrailerLabel"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:layout_weight="1"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                android:textColor="@color/textColor"
-                tools:text="Trailers" />
-
-        </LinearLayout>
     </LinearLayout>
 </layout>

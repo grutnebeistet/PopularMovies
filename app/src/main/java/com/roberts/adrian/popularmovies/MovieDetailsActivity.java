@@ -36,7 +36,8 @@ import butterknife.ButterKnife;
 public class MovieDetailsActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor>,
         TrailerAdapter.TrailerAdapterOnClickHandler,
-        ReviewAdapter.ReviewAdapterOnClickHandler {
+        ReviewAdapter.ReviewAdapterOnClickHandler,
+        ImagesAdapter.ImagesAdapterOnClickHandler {
 
     private static final String LOG_TAG = MovieDetailsActivity.class.getSimpleName();
 
@@ -56,11 +57,16 @@ public class MovieDetailsActivity extends AppCompatActivity
     ScrollView scrollView;
     @BindView(R.id.imageView_detailsHeader)
     ImageView detailsImageHeader;
+    @BindView(R.id.recyclerview_images)
+    RecyclerView mImagesRecyclerView;
 
     TrailerAdapter mTrailerAdapter;
     ReviewAdapter mReviewAdapter;
+    ImagesAdapter mImagesAdapter;
     ArrayList<MovieTrailer> mTrailers;
     ArrayList<MovieReview> mReviews;
+    ArrayList<String> mImages;
+
     private Uri mUri;
     private boolean isFavourite = false;
     private ActivityMovieDetailsBinding movieDetailsBinding;
@@ -96,6 +102,9 @@ public class MovieDetailsActivity extends AppCompatActivity
         ButterKnife.bind(this);
         scrollView.smoothScrollTo(View.SCROLL_INDICATOR_START, View.SCROLL_INDICATOR_START);
 
+        LinearLayoutManager imagesLm = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        mImagesRecyclerView.setLayoutManager(imagesLm);
+
         LinearLayoutManager trailersLayoutMngr = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mTrailersRecyclerView.setLayoutManager(trailersLayoutMngr);
         mTrailersRecyclerView.setHasFixedSize(true);
@@ -107,9 +116,12 @@ public class MovieDetailsActivity extends AppCompatActivity
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mTrailersRecyclerView.getContext(),
                 trailersLayoutMngr.getOrientation());
 
+        DividerItemDecoration dividerImages = new DividerItemDecoration(mImagesRecyclerView.getContext(),
+                imagesLm.getOrientation());
+
         mTrailersRecyclerView.addItemDecoration(dividerItemDecoration);
         mReviewsRecyclerView.addItemDecoration(dividerItemDecoration);
-
+        mImagesRecyclerView.addItemDecoration(dividerImages);
 
         final int EXTRA_DATA_LOADER = 1349;
         mUri = getIntent().getData();
@@ -119,6 +131,10 @@ public class MovieDetailsActivity extends AppCompatActivity
 
             mTrailers = mExtraData.getMovieTrailers();
             mReviews = mExtraData.getMovieReviews();
+            mImages = mExtraData.getMovieImages();
+
+            mImagesAdapter = new ImagesAdapter(this, this, mImages);
+            movieDetailsBinding.recyclerviewImages.setAdapter(mImagesAdapter);
 
             mTrailerAdapter = new TrailerAdapter(this, this, mTrailers);
             movieDetailsBinding.recyclerviewTrailers.setAdapter(mTrailerAdapter);
@@ -264,5 +280,10 @@ public class MovieDetailsActivity extends AppCompatActivity
 
         if (externalContent.resolveActivity(getPackageManager()) != null)
             startActivity(externalContent);
+    }
+
+    @Override
+    public void onClickImage(String url) {
+
     }
 }

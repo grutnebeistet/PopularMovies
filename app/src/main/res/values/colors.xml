@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#212121</color>
-    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorPrimaryDark">#111</color>
     <color name="colorPrimaryLight">#B2DFDB</color>
     <color name="colorAccent">#9A0000</color> <!--FF4081-->
+    <color name="colorAccentLight">#7a4545</color>
 
     <color name="textColor">#f7f7f7</color>
     <color name="textColorDark">#bababa</color>
 
     <color name="translucent_black">#80000000</color>
 
-    <color name="left_drawer_bg">#111</color>
+    <color name="colorSemiDark">#262626</color>
 </resources>

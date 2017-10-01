@@ -61,11 +61,11 @@ public class JsonUtils {
             int store_as_popular = orderBy.equals(context.getString(R.string.settings_order_by_popularity_value)) ? 1 : 0;
 
             String thumbnailUrl = BASE_POSTER_PATH_URL.concat(DEFAULT_POSTER_SIZE).concat(thumbnailKey);
-           // Log.i(LOG_TAG, thumbnailUrl);
+            // Log.i(LOG_TAG, thumbnailUrl);
             String backposterUrl = BASE_POSTER_PATH_URL.concat(DEFAULT_BACKPOSTER_SIZE).concat(backposterKey);
             Bitmap thumbnailBitmap = null;
 
-           try {
+            try {
                 InputStream in = new java.net.URL(thumbnailUrl).openStream();
                 thumbnailBitmap = BitmapFactory.decodeStream(in);
             } catch (Exception e) {
@@ -123,17 +123,25 @@ public class JsonUtils {
         return videoTrailers;
     }
 
-    public static ContentValues parseMovieRuntime(String json) {
-        ContentValues values = new ContentValues();
-        int runtime;
+    public static ArrayList<String> parseJsonImages(String json) {
+        Log.i(LOG_TAG, "images json: \n" + json);
+        ArrayList<String> videoImages = new ArrayList<>();
         try {
-            JSONObject base = new JSONObject(json);
-            runtime = base.getInt("runtime");
-            values.put(MovieEntry.COLUMN_MOVIE_RUNTIME, runtime);
-        } catch (JSONException je) {
+            JSONObject baseResponse = new JSONObject(json);
+            JSONArray imagesResults = baseResponse.getJSONArray("backdrops");
 
+            for (int i = 0; i < imagesResults.length(); i++) {
+                Log.i(LOG_TAG, "imagesRes.leng " + imagesResults.length());
+                JSONObject image = imagesResults.getJSONObject(i);
+              //  if (image.getString("height").equals("720")) {
+                    String imagePath = image.getString("file_path");
+                    videoImages.add(imagePath);
+                //}
+            }
+        } catch (JSONException je) {
+            Log.e(LOG_TAG, "ParseJson" + je.toString());
         }
-        return values;
+        return videoImages;
     }
 
     public static ArrayList<MovieReview> parseJsonReviews(String json) {
@@ -156,5 +164,19 @@ public class JsonUtils {
         }
         return videoReviews;
     }
+
+    public static ContentValues parseMovieRuntime(String json) {
+        ContentValues values = new ContentValues();
+        int runtime;
+        try {
+            JSONObject base = new JSONObject(json);
+            runtime = base.getInt("runtime");
+            values.put(MovieEntry.COLUMN_MOVIE_RUNTIME, runtime);
+        } catch (JSONException je) {
+
+        }
+        return values;
+    }
+
 
 }
